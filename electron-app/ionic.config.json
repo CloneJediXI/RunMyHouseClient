@@ -1,0 +1,7 @@
+{
+    "name": "runMyHouse",
+    "integrations": {
+      "capacitor": {}
+    },
+    "type": "react"
+  }

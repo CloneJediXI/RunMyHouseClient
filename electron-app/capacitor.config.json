@@ -1,0 +1,9 @@
+{
+    "appId": "io.ionic.runMyHouse",
+    "appName": "runMyHouse",
+    "bundledWebRuntime": false,
+    "npmClient": "npm",
+    "webDir": "build",
+    "CAPACITOR_ANDROID_STUDIO_PATH": "C:\\Users\\Spencer\\AppData\\Local\\JetBrains\\Toolbox\\apps\\AndroidStudio\\ch-0\\191.5977832\\bin",
+    "cordova": {}
+  }
