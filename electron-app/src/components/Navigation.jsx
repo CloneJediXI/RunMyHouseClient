@@ -17,25 +17,30 @@ function Navigation(props) {
 
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div className="navbar-nav">
-                    <Link class={`nav-link  ${
+                    <Link className={`nav-link  ${
                         props.location.pathname === "/" ? "active" : ""
                         }`} to="/">
                         Home
                     </Link>
-                    <Link class={`nav-link  ${
+                    <Link className={`nav-link  ${
                         props.location.pathname === "/about" ? "about" : ""
                         }`} to="/about">
                         About
                     </Link>
-                    <Link class={`nav-link  ${
+                    <Link className={`nav-link  ${
                         props.location.pathname === "/contact" ? "active" : ""
                         }`} to="/contact">
                         Contact
                     </Link>
+                    
                 </div>
             </div>
-
+            <div className="navbar-nav navbar-right">
+                <button className="btn btn-outline-warning btn-nav ms-auto" onClick={() => props.logOut()}>Log Out</button>
+            </div>
+            
         </div>
+        
       </nav>
     </div>
   );
