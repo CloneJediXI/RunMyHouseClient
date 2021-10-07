@@ -11,8 +11,10 @@ class App extends React.Component {
 
     this.validate = this.validate.bind(this);
     this.logOut = this.logOut.bind(this);
+    this.connectToServer = this.connectToServer.bind(this);
     this.state = {
-      auth: 'false'
+      auth: 'false',
+      message: 'Nothing'
     };
   }
   validate() {
@@ -25,11 +27,20 @@ class App extends React.Component {
       auth: 'false'
     });
   }
+  connectToServer(){
+    fetch('http://localhost:80/runmyhouseserver/login.php?username=test&password=test')
+        .then(response => response.json())
+        .then(data => this.setState({ message: data.message }))
+        .catch(error => {
+          this.setState({ message: error.toString() });
+          console.error('There was an error!', error);
+        });;
+  }
 
   render() {
     let test = <div className="App"><h1 className="text-center">Oops! Something went wrong!</h1></div>;
     if (this.state.auth === 'false'){
-      test = <LogIn validate={this.validate}></LogIn>;
+      test = <LogIn validate={this.validate} connect={this.connectToServer} message={this.state.message}></LogIn>;
     }else {
       test = <div className="App">
         <Router>
