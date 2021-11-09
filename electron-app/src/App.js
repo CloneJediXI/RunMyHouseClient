@@ -4,6 +4,7 @@ import './App.css';
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Navigation, Footer, Home, About, Contact, LogIn } from "./components";
+import getServer from './enviroment';
 
 class App extends React.Component {
   constructor(props) {
@@ -30,18 +31,10 @@ class App extends React.Component {
     });
   }
   testDevice(){
-    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
-      this.setState({testResult: "mobile"});
-    }else{
-      this.setState({testResult: "not mobile"});
-    }
+    this.setState({testResult: getServer()});
   }
   connectToServer(){
-    let server = "localhost";
-    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
-      server = "10.0.2.2"
-    }
-    fetch('http://'+server+':80/runmyhouseserver/login.php?username=test&password=test', {method: 'GET', 
+    fetch('http://'+getServer()+':80/runmyhouseserver/login.php?username=test&password=test', {method: 'GET', 
     mode: 'cors', crossDomain:true,})
         .then(response => response.json())
         .then(data => this.setState({ message: data.message }))
