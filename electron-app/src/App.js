@@ -12,9 +12,11 @@ class App extends React.Component {
     this.validate = this.validate.bind(this);
     this.logOut = this.logOut.bind(this);
     this.connectToServer = this.connectToServer.bind(this);
+    this.testDevice = this.testDevice.bind(this);
     this.state = {
       auth: 'false',
-      message: 'Nothing'
+      message: 'Nothing',
+      testResult: 'Not Run'
     };
   }
   validate() {
@@ -27,8 +29,20 @@ class App extends React.Component {
       auth: 'false'
     });
   }
+  testDevice(){
+    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+      this.setState({testResult: "mobile"});
+    }else{
+      this.setState({testResult: "not mobile"});
+    }
+  }
   connectToServer(){
-    fetch('http://localhost:80/runmyhouseserver/login.php?username=test&password=test')
+    let server = "localhost";
+    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+      server = "10.0.2.2"
+    }
+    fetch('http://'+server+':80/runmyhouseserver/login.php?username=test&password=test', {method: 'GET', 
+    mode: 'cors', crossDomain:true,})
         .then(response => response.json())
         .then(data => this.setState({ message: data.message }))
         .catch(error => {
@@ -40,7 +54,7 @@ class App extends React.Component {
   render() {
     let test = <div className="App"><h1 className="text-center">Oops! Something went wrong!</h1></div>;
     if (this.state.auth === 'false'){
-      test = <LogIn validate={this.validate} connect={this.connectToServer} message={this.state.message}></LogIn>;
+      test = <LogIn validate={this.validate} connect={this.connectToServer} message={this.state.message} testDevice={this.testDevice} testResult={this.state.testResult}></LogIn>;
     }else {
       test = <div className="App">
         <Router>

@@ -9,6 +9,9 @@ function LogIn(props) {
         <br/>
         <button className="btn btn-secondary" onClick={() => props.connect()}>Connect To Server</button>
         <p>{props.message}</p>
+        <br/>
+        <button className="btn btn-dark" onClick={() => props.testDevice()}>Test Device</button>
+        <p>{props.testResult}</p>
       </div>
     </div>
   );
