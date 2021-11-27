@@ -17,23 +17,27 @@ class App extends React.Component {
     this.exitCreateContractor = this.exitCreateContractor.bind(this);
     this.state = {
       auth: 'false',
-      message: 'Nothing',
+      message: '',
       newUser: 'false',
-      newContractor: 'false'
+      newContractor: 'false',
+      contractor: 'false',
+      id: '-1',
     };
   }
-  validate() {
-    this.setState({
-      auth: 'true'
-    });
+  validate(contractorFlag, idNum) {
+    
+    this.setState({auth: 'true', contractor: contractorFlag, id:idNum});
   }
   logOut() {
-    this.setState({
-      auth: 'false'
-    });
+    this.setState({auth: 'false', message:"" });
   }
-  exitCreate(){
-    this.setState({ newUser: 'false'});
+  exitCreate(success){
+    if(success){
+      this.setState({ newUser: 'false', message: "Account creation successful, please log in"});
+    }else{
+      this.setState({ newUser: 'false', message:""});
+    }
+    
   }
   enterCreate(){
     this.setState({ newUser: 'true'});
@@ -41,8 +45,13 @@ class App extends React.Component {
   enterCreateContractor(){
     this.setState({ newContractor: 'true'});
   }
-  exitCreateContractor(){
-    this.setState({ newContractor: 'fase'});
+  exitCreateContractor(success){
+    if(success){
+      this.setState({ newContractor: 'fase', message: "Account creation successful, please log in"});
+    }else{
+      this.setState({ newContractor: 'fase', message:""});
+    }
+    
   }
 
   render() {
@@ -58,6 +67,7 @@ class App extends React.Component {
         test = <LogIn validate={this.validate} 
                   enterCreate={this.enterCreate}
                   enterCreateContractor={this.enterCreateContractor}
+                  message={this.state.message}
                   ></LogIn>;
       }
     }else {
@@ -65,7 +75,7 @@ class App extends React.Component {
         <Router>
           <Navigation logOut={this.logOut}/>
           <Switch>
-            <Route path="/" exact component={() => <Home />} />
+            <Route path="/" exact component={() => <Home id={this.state.id} contractor={this.state.contractor}/>} />
             <Route path="/about" exact component={() => <About />} />
             <Route path="/contact" exact component={() => <Contact />} />
           </Switch>

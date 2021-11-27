@@ -47,21 +47,21 @@ class NewContractor extends React.Component {
         });;
     
   }
-  checkLogIn(error){
+  checkLogIn(error, id){
     this.setState({err: error})
     if(error == 'false'){
       this.setState({message: 'Success! '});
-      this.exitCreate();
-      this.validate();
+      this.exitCreateContractor(true);
+      //this.validate(true, id);
     }else{
       this.setState({message: 'That Username is taken '});
     }
   }
   newUser(){
-    fetch('http://'+getServer()+':80/runmyhouseserver/login.php?username='+this.state.username+'&password='+this.state.password+'&name='+this.state.fullName+'&email='+this.state.email, {method: 'GET', 
+    fetch('http://'+getServer()+':80/runmyhouseserver/login.php?username='+this.state.companyName+'&password='+this.state.password+'&service='+this.state.service+'&routing='+this.state.routingNumber+'&account='+this.state.acountNumber, {method: 'GET', 
     mode: 'cors', crossDomain:true,})
         .then(response => response.json())
-        .then(data => this.checkLogIn(data.err))
+        .then(data => this.checkLogIn(data.err, data.id))
         .catch(error => {
           this.setState({ message: error.toString() });
           console.error('There was an error!', error);
@@ -78,20 +78,20 @@ class NewContractor extends React.Component {
             <br/>
             <input type="text" value={this.state.password} placeholder="Password" onChange={(event) => this.setState({password: event.target.value})}/>
             <br/>
-            <select value={this.state.service} onChange={(event) => this.setState({username: event.target.value})}>
+            <select value={this.state.service} onChange={(event) => this.setState({service: event.target.value})}>
                 {this.state.types.map(element => <option value={element} key={element}>{element}</option>)}
             </select>
             <label>Add New Service</label>
             <input type="text" value={this.state.newType} placeholder="New Type of Service" onChange={(event) => this.setState({newType: event.target.value})}/>
             <button className="btn btn-success" onClick={() => this.newType()}>Submit</button>
             <br/>
-            <input type="text" value={this.state.username} placeholder="Username" onChange={(event) => this.setState({username: event.target.value})}/>
+            <input type="text" value={this.state.routingNumber} placeholder="Bank Routing number" onChange={(event) => this.setState({routingNumber: event.target.value})}/>
             <br/>
-            <input type="text" value={this.state.password} placeholder="Password" onChange={(event) => this.setState({password: event.target.value})}/>
+            <input type="text" value={this.state.acountNumber} placeholder="Bank Account Number" onChange={(event) => this.setState({acountNumber: event.target.value})}/>
             <br/>
             <button className="btn btn-primary" onClick={() => this.newUser()}>Create Account</button>
             <br/>
-            <button className="btn btn-warning" onClick={() => this.exitCreateContractor()}>Back</button>
+            <button className="btn btn-warning" onClick={() => this.exitCreateContractor(false)}>Back</button>
         </div>
     </div>;
     return (html);

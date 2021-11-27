@@ -16,12 +16,12 @@ class NewUser extends React.Component {
       message: '',
     };
   }
-  checkLogIn(error){
+  checkLogIn(error, id){
     this.setState({err: error})
     if(error == 'false'){
       this.setState({message: 'Success! '});
-      this.exitCreate();
-      this.validate();
+      this.exitCreate(true);
+      //this.validate(false, id);
     }else{
       this.setState({message: 'That Username is taken '});
     }
@@ -30,7 +30,7 @@ class NewUser extends React.Component {
     fetch('http://'+getServer()+':80/runmyhouseserver/login.php?username='+this.state.username+'&password='+this.state.password+'&name='+this.state.fullName+'&email='+this.state.email, {method: 'GET', 
     mode: 'cors', crossDomain:true,})
         .then(response => response.json())
-        .then(data => this.checkLogIn(data.err))
+        .then(data => this.checkLogIn(data.err, data.id))
         .catch(error => {
           this.setState({ message: error.toString() });
           console.error('There was an error!', error);
@@ -53,7 +53,7 @@ class NewUser extends React.Component {
             <br/>
             <button className="btn btn-primary" onClick={() => this.newUser()}>Create Account</button>
             <br/>
-            <button className="btn btn-warning" onClick={() => this.exitCreate()}>Back</button>
+            <button className="btn btn-warning" onClick={() => this.exitCreate(false)}>Back</button>
         </div>
     </div>;
     return (html);

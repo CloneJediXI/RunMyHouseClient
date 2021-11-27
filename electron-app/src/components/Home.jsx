@@ -1,6 +1,6 @@
 import React from "react";
 
-function Home() {
+function Home(props) {
   return (
     <div className="home">
       <div className="container">
@@ -13,7 +13,7 @@ function Home() {
             />
           </div>
           <div className="col-lg-5">
-            <h1 className="font-weight-light">Home</h1>
+            <h1 className="font-weight-light">Home, id={props.id}, isContractor={props.contractor? "true" : "false"}</h1>
             <p>
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
