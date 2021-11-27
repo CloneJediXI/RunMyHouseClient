@@ -6,6 +6,7 @@ class LogIn extends React.Component {
     super(props);
     this.validate = props.validate.bind(this);
     this.enterCreate = props.enterCreate.bind(this);
+    this.enterCreateContractor = props.enterCreateContractor.bind(this);
     this.logIn = this.logIn.bind(this);
     this.state = {
       username: "",
@@ -45,6 +46,9 @@ class LogIn extends React.Component {
           <br/>
           <br/>
           <button className="btn btn-success" onClick={() => this.enterCreate()}>Create Account</button>
+          <br/>
+          <br/>
+          <button className="btn btn-success" onClick={() => this.enterCreateContractor()}>New Contractor</button>
           
         </div>
       </div>;
