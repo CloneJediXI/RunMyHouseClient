@@ -24,7 +24,6 @@ class LogIn extends React.Component {
     }
   }
   logIn(){
-    let success = '';
     fetch('http://'+getServer()+':80/runmyhouseserver/login.php?username='+this.state.username+'&password='+this.state.password, {method: 'GET', 
     mode: 'cors', crossDomain:true,})
         .then(response => response.json())

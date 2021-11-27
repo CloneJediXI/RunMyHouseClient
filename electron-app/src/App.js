@@ -12,13 +12,11 @@ class App extends React.Component {
 
     this.validate = this.validate.bind(this);
     this.logOut = this.logOut.bind(this);
-    this.testDevice = this.testDevice.bind(this);
     this.exitCreate = this.exitCreate.bind(this);
     this.enterCreate = this.enterCreate.bind(this);
     this.state = {
       auth: 'false',
       message: 'Nothing',
-      testResult: 'Not Run',
       newUser: 'false'
     };
   }
@@ -31,19 +29,6 @@ class App extends React.Component {
     this.setState({
       auth: 'false'
     });
-  }
-  testDevice(){
-    this.setState({testResult: getServer()});
-  }
-  newUser(){
-    fetch('http://'+getServer()+':80/runmyhouseserver/login.php?username='+this.state.username+'&password='+this.state.password+'&name='+this.state.fullName+'&email='+this.state.email, {method: 'GET', 
-    mode: 'cors', crossDomain:true,})
-        .then(response => response.json())
-        .then(data => this.setState({ auth: data.auth }))
-        .catch(error => {
-          this.setState({ message: error.toString() });
-          console.error('There was an error!', error);
-        });;
   }
   exitCreate(){
     this.setState({ newUser: 'false'});
