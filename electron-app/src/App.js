@@ -3,7 +3,7 @@ import './App.css';
 
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Navigation, Footer, Home, About, Contact, LogIn } from "./components";
+import { Navigation, Footer, Home, About, Contact, LogIn, NewUser } from "./components";
 import getServer from './enviroment';
 
 class App extends React.Component {
@@ -12,12 +12,14 @@ class App extends React.Component {
 
     this.validate = this.validate.bind(this);
     this.logOut = this.logOut.bind(this);
-    this.connectToServer = this.connectToServer.bind(this);
     this.testDevice = this.testDevice.bind(this);
+    this.exitCreate = this.exitCreate.bind(this);
+    this.enterCreate = this.enterCreate.bind(this);
     this.state = {
       auth: 'false',
       message: 'Nothing',
-      testResult: 'Not Run'
+      testResult: 'Not Run',
+      newUser: 'false'
     };
   }
   validate() {
@@ -33,21 +35,34 @@ class App extends React.Component {
   testDevice(){
     this.setState({testResult: getServer()});
   }
-  connectToServer(){
-    fetch('http://'+getServer()+':80/runmyhouseserver/login.php?username=test&password=test', {method: 'GET', 
+  newUser(){
+    fetch('http://'+getServer()+':80/runmyhouseserver/login.php?username='+this.state.username+'&password='+this.state.password+'&name='+this.state.fullName+'&email='+this.state.email, {method: 'GET', 
     mode: 'cors', crossDomain:true,})
         .then(response => response.json())
-        .then(data => this.setState({ message: data.message }))
+        .then(data => this.setState({ auth: data.auth }))
         .catch(error => {
           this.setState({ message: error.toString() });
           console.error('There was an error!', error);
         });;
   }
+  exitCreate(){
+    this.setState({ newUser: 'false'});
+  }
+  enterCreate(){
+    this.setState({ newUser: 'true'});
+  }
 
   render() {
     let test = <div className="App"><h1 className="text-center">Oops! Something went wrong!</h1></div>;
     if (this.state.auth === 'false'){
-      test = <LogIn validate={this.validate} connect={this.connectToServer} message={this.state.message} testDevice={this.testDevice} testResult={this.state.testResult}></LogIn>;
+      if (this.state.newUser === 'true'){
+        test = <NewUser validate={this.validate}
+                  exitCreate={this.exitCreate}></NewUser>;
+      }else{
+        test = <LogIn validate={this.validate} 
+                  enterCreate={this.enterCreate}
+                  ></LogIn>;
+      }
     }else {
       test = <div className="App">
         <Router>
