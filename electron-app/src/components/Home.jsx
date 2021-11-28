@@ -24,7 +24,7 @@ class Home extends React.Component {
     this.getJobs();
   }
   getJobs(){
-    fetch('http://'+getServer()+':80/runmyhouseserver/job.php?userId='+this.state.id, {method: 'GET', 
+    fetch('http://'+getServer()+':80/runmyhouseserver/job.php?userId='+this.state.id+'&viewAll=true', {method: 'GET', 
     mode: 'cors', crossDomain:true,})
         .then(response => response.json())
         .then(data => this.setState({jobs: data.data}))
@@ -71,11 +71,11 @@ class Home extends React.Component {
     let html = <div className="home">
         <div className="container">
           <div className="row align-items-center my-5">
-            <div className="col-lg-3"></div>
-            <div className="col-lg-6">
+            <div className="col-lg-2"></div>
+            <div className="col-lg-8">
               <h1 className="font-weight-light">Home</h1>
               <h2>Open Jobs</h2>
-              <div className="card-group">
+              <div className="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
                 {this.state.jobs.map(element => <JobCard data={element} key={element.ticket_id}></JobCard>)}
               </div>
               

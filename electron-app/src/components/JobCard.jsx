@@ -2,7 +2,8 @@ import React from "react";
 
 function JobCard(props) {
   return (
-    <div className="card text-dark bg-light mb-3 border-warning" >
+      <div className="col">
+    <div className="card text-dark bg-light mb-3 border-warning h-100" style={{minWidth:"15rem"}}>
         <div className="card-header">
             <h5 className="card-title">{props.data.job_title}</h5>
             <h6 className="card-subtitle mb-2 text-muted">Posted by {props.data.poster}</h6>
@@ -19,6 +20,7 @@ function JobCard(props) {
             <a href="#" className="card-link">Card link</a>
             <a href="#" className="card-link">Another link</a>
         </div>
+    </div>
     </div>
   );
 }
