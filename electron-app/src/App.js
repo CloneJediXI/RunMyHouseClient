@@ -3,7 +3,7 @@ import './App.css';
 
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Navigation, Footer, Home, About, Contact, LogIn, NewUser, NewContractor } from "./components";
+import { Navigation, Footer, Home, About, Contact, LogIn, NewUser, NewContractor, ContractorHome } from "./components";
 
 class App extends React.Component {
   constructor(props) {
@@ -70,12 +70,24 @@ class App extends React.Component {
                   message={this.state.message}
                   ></LogIn>;
       }
-    }else {
+    }else if(this.state.contractor) {
       test = <div className="App">
         <Router>
           <Navigation logOut={this.logOut}/>
           <Switch>
-            <Route path="/" exact component={() => <Home id={this.state.id} contractor={this.state.contractor}/>} />
+            <Route path="/" exact component={() => <ContractorHome id={this.state.id}/>} />
+            <Route path="/about" exact component={() => <About />} />
+            <Route path="/contact" exact component={() => <Contact />} />
+          </Switch>
+          <Footer />
+        </Router>
+      </div>;
+    }else{
+      test = <div className="App">
+        <Router>
+          <Navigation logOut={this.logOut}/>
+          <Switch>
+            <Route path="/" exact component={() => <Home id={this.state.id}/>} />
             <Route path="/about" exact component={() => <About />} />
             <Route path="/contact" exact component={() => <Contact />} />
           </Switch>

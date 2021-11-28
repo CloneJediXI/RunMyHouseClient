@@ -6,3 +6,5 @@ export { default as Contact } from "./Contact";
 export { default as LogIn } from "./LogIn";
 export { default as NewUser } from "./NewUser";
 export { default as NewContractor } from "./NewContractor";
+export { default as ContractorHome } from "./ContractorHome";
+export { default as JobCard } from "./JobCard";
