@@ -84,15 +84,13 @@ class Home extends React.Component {
                 <div className="col-8"></div>
                 <div className="col-4">
                   <button className="float-end btn btn-sm btn-primary ms-5" onClick={(event) => {this.setState({viewAll: (!this.state.viewAll)});}}>{(this.state.viewAll)? "Show Open Jobs":"Show All Jobs"}</button>
-
                 </div>
               </div>
-              
               <div className="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
                 {this.state.jobs.map(element => <JobCard data={element} key={element.ticket_id}></JobCard>)}
               </div>
-              
               <hr/>
+              <h2>Create new Job Listing</h2>
               <p>
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry. Lorem Ipsum has been the industry's standard dummy text
