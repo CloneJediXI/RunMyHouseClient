@@ -16,15 +16,21 @@ class Home extends React.Component {
       err: 'false',
       message: '',
       jobs: [],
-      id: props.id
+      id: props.id,
+      viewAll: false
     };
     
+  }
+  componentDidUpdate(prevProps, prevState){
+    if (prevState.viewAll != this.state.viewAll) {
+      this.getJobs();
+    }
   }
   componentDidMount() {
     this.getJobs();
   }
   getJobs(){
-    fetch('http://'+getServer()+':80/runmyhouseserver/job.php?userId='+this.state.id+'&viewAll=true', {method: 'GET', 
+    fetch('http://'+getServer()+':80/runmyhouseserver/job.php?userId='+this.state.id+'&viewAll='+this.state.viewAll, {method: 'GET', 
     mode: 'cors', crossDomain:true,})
         .then(response => response.json())
         .then(data => this.setState({jobs: data.data}))
@@ -73,8 +79,15 @@ class Home extends React.Component {
           <div className="row align-items-center my-5">
             <div className="col-lg-2"></div>
             <div className="col-lg-8">
-              <h1 className="font-weight-light">Home</h1>
-              <h2>Open Jobs</h2>
+              <h1 className="font-weight-light">{(this.state.viewAll)? "All Jobs":"Open Jobs"}</h1>
+              <div className="row mt-0 mb-3">
+                <div className="col-8"></div>
+                <div className="col-4">
+                  <button className="float-end btn btn-sm btn-primary ms-5" onClick={(event) => {this.setState({viewAll: (!this.state.viewAll)});}}>{(this.state.viewAll)? "Show Open Jobs":"Show All Jobs"}</button>
+
+                </div>
+              </div>
+              
               <div className="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
                 {this.state.jobs.map(element => <JobCard data={element} key={element.ticket_id}></JobCard>)}
               </div>
