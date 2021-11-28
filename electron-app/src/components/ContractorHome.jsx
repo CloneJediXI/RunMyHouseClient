@@ -1,99 +1,66 @@
 import React from "react";
 import getServer from '../enviroment';
+import { JobCard } from "../components";
 
 class ContractorHome extends React.Component {
   constructor(props) {
     super(props);
-    this.validate = props.validate.bind(this);
-    this.exitCreateContractor = props.exitCreateContractor.bind(this);
-    this.newUser = this.newUser.bind(this);
-    this.newType = this.newType.bind(this);
+    this.getJobs = this.getJobs.bind(this);
     this.state = {
-      companyName: "",
-      password: "",
-      service: "",
-      routingNumber: "",
-      acountNumber: "",
       err: 'false',
       message: '',
-      types: [],
-      newType: "",
+      jobs: [],
+      id: props.id,
+      viewAll: false
     };
     
   }
-  componentDidMount() {
-    this.getServiceTypes();
-  }
-  getServiceTypes(){
-    fetch('http://'+getServer()+':80/runmyhouseserver/typesOfService.php', {method: 'GET', 
-    mode: 'cors', crossDomain:true,})
-        .then(response => response.json())
-        .then(data => this.setState({types: data.services}))
-        .catch(error => {
-          this.setState({ message: error.toString() });
-          console.error('There was an error!', error);
-        });;
-  }
-  newType(){
-    fetch('http://'+getServer()+':80/runmyhouseserver/typesOfService.php?add='+this.state.newType, {method: 'GET', 
-    mode: 'cors', crossDomain:true,})
-        .then(response => response.json())
-        .then(data => this.setState({service: this.state.newType}))
-        .then(() => this.setState({newType: ""}))
-        .then(() => this.getServiceTypes())
-        .catch(error => {
-          this.setState({ message: error.toString() });
-          console.error('There was an error!', error);
-        });;
-    
-  }
-  checkLogIn(error, id){
-    this.setState({err: error})
-    if(error == 'false'){
-      this.setState({message: 'Success! '});
-      this.exitCreateContractor(true);
-      //this.validate(true, id);
-    }else{
-      this.setState({message: 'That Username is taken '});
+  componentDidUpdate(prevProps, prevState){
+    if (prevState.viewAll != this.state.viewAll) {
+      this.getJobs();
     }
   }
-  newUser(){
-    fetch('http://'+getServer()+':80/runmyhouseserver/login.php?username='+this.state.companyName+'&password='+this.state.password+'&service='+this.state.service+'&routing='+this.state.routingNumber+'&account='+this.state.acountNumber, {method: 'GET', 
+  componentDidMount() {
+    this.getJobs();
+  }
+  getJobs(){
+    fetch('http://'+getServer()+':80/runmyhouseserver/job.php?contractorId='+this.state.id+'&viewAll='+this.state.viewAll, {method: 'GET', 
     mode: 'cors', crossDomain:true,})
         .then(response => response.json())
-        .then(data => this.checkLogIn(data.err, data.id))
+        .then(data => this.setState({jobs: data.data}))
         .catch(error => {
           this.setState({ message: error.toString() });
           console.error('There was an error!', error);
         });;
-    
   }
   render(){
-    let html = <div className="contact">
+    let html = <div className="home">
         <div className="container">
-            <h1 className="text-center">Create new Contractor Account</h1>
-            <p className="text-danger">{this.state.message}</p>
-            <br/>
-            <input type="text" value={this.state.companyName} placeholder="Company Name" onChange={(event) => this.setState({companyName: event.target.value})}/>
-            <br/>
-            <input type="text" value={this.state.password} placeholder="Password" onChange={(event) => this.setState({password: event.target.value})}/>
-            <br/>
-            <select value={this.state.service} onChange={(event) => this.setState({service: event.target.value})}>
-                {this.state.types.map(element => <option value={element} key={element}>{element}</option>)}
-            </select>
-            <label>Add New Service</label>
-            <input type="text" value={this.state.newType} placeholder="New Type of Service" onChange={(event) => this.setState({newType: event.target.value})}/>
-            <button className="btn btn-success" onClick={() => this.newType()}>Submit</button>
-            <br/>
-            <input type="text" value={this.state.routingNumber} placeholder="Bank Routing number" onChange={(event) => this.setState({routingNumber: event.target.value})}/>
-            <br/>
-            <input type="text" value={this.state.acountNumber} placeholder="Bank Account Number" onChange={(event) => this.setState({acountNumber: event.target.value})}/>
-            <br/>
-            <button className="btn btn-primary" onClick={() => this.newUser()}>Create Account</button>
-            <br/>
-            <button className="btn btn-warning" onClick={() => this.exitCreateContractor(false)}>Back</button>
+          <div className="row align-items-center my-5">
+            <div className="col-lg-2"></div>
+            <div className="col-lg-8">
+              <h1 className="font-weight-light">{(this.state.viewAll)? "All Jobs":"Open Jobs"}</h1>
+              <div className="row mt-0 mb-3">
+                <div className="col-8"></div>
+                <div className="col-4">
+                  <button className="float-end btn btn-sm btn-primary ms-5" onClick={(event) => {this.setState({viewAll: (!this.state.viewAll)});}}>{(this.state.viewAll)? "Show Open Jobs":"Show All Jobs"}</button>
+                </div>
+              </div>
+              <div className="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+                {this.state.jobs.map(element => <JobCard data={element} key={element.ticket_id}></JobCard>)}
+              </div>
+              <hr/>
+              <h2>Create new Job Listing</h2>
+              <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard dummy text
+                ever since the 1500s, when an unknown printer took a galley of
+                type and scrambled it to make a type specimen book.
+              </p>
+            </div>
+          </div>
         </div>
-    </div>;
+      </div>;
     return (html);
   }
 }

@@ -15,24 +15,20 @@ class LogIn extends React.Component {
       message: props.message,
     };
   }
-  checkLogIn(valid, id){
+  checkLogIn(valid, id, contractor){
     this.setState({auth: valid})
     if(valid == 'true'){
       this.setState({message: 'Success! '});
-      this.validate(this.state.contractorFlag, id);
+      this.validate(contractor, id);
     }else{
       this.setState({message: 'Invalid Password or Username '});
     }
   }
   logIn(){
-    let contractor = "";
-    if(this.state.contractorFlag){
-      contractor="&contractor=true";
-    }
-    fetch('http://'+getServer()+':80/runmyhouseserver/login.php?username='+this.state.username+'&password='+this.state.password+contractor, {method: 'GET', 
+    fetch('http://'+getServer()+':80/runmyhouseserver/login.php?username='+this.state.username+'&password='+this.state.password, {method: 'GET', 
     mode: 'cors', crossDomain:true,})
         .then(response => response.json())
-        .then(data => this.checkLogIn(data.auth, data.id))
+        .then(data => this.checkLogIn(data.auth, data.id, data.contractor))
         .catch(error => {
           this.setState({ message: error.toString() });
           console.error('There was an error!', error);
@@ -40,15 +36,12 @@ class LogIn extends React.Component {
     
   }
   render(){
-    let html = <div className="row">
+    let html = <div className="row m-0">
         <div className="col-md-4 col-1"></div>
         <div className="col-10 col-md-4">
-          <div className="container bg-dark text-light p-5">
+          <div className="container bg-dark text-light p-5 m-0">
             <h1 className="text-center">Log In</h1>
             <p className="text-danger">{this.state.message}</p>
-            <label className="pe-3">If you are a contractor, check this box</label>
-            <input type="checkbox" value={this.state.contractorFlag} onChange={(event) => this.setState({contractorFlag: event.target.checked})}/>
-            <br/>
             <input type="text" value={this.state.username} placeholder="Username" onChange={(event) => this.setState({username: event.target.value})}/>
             <br/>
             <input type="text" value={this.state.password} placeholder="Password" onChange={(event) => this.setState({password: event.target.value})}/>

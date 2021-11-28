@@ -55,7 +55,7 @@ class App extends React.Component {
   }
 
   render() {
-    let test = <div className="App"><h1 className="text-center">Oops! Something went wrong!</h1></div>;
+    let test = <div className="App m-0"><h1 className="text-center">Oops! Something went wrong!</h1></div>;
     if (this.state.auth === 'false'){
       if (this.state.newUser === 'true'){
         test = <NewUser validate={this.validate}
@@ -71,9 +71,9 @@ class App extends React.Component {
                   ></LogIn>;
       }
     }else if(this.state.contractor) {
-      test = <div className="App">
+      test = <div className="App m-0">
         <Router>
-          <Navigation logOut={this.logOut}/>
+          <Navigation logOut={this.logOut} isContractor={true}/>
           <Switch>
             <Route path="/" exact component={() => <ContractorHome id={this.state.id}/>} />
             <Route path="/about" exact component={() => <About />} />
@@ -83,9 +83,9 @@ class App extends React.Component {
         </Router>
       </div>;
     }else{
-      test = <div className="App">
+      test = <div className="App m-0">
         <Router>
-          <Navigation logOut={this.logOut}/>
+          <Navigation logOut={this.logOut} isContractor={false}/>
           <Switch>
             <Route path="/" exact component={() => <Home id={this.state.id}/>} />
             <Route path="/about" exact component={() => <About />} />
