@@ -38,22 +38,25 @@ class NewUser extends React.Component {
     
   }
   render(){
-    let html = <div className="contact">
-        <div className="container">
-            <h1 className="text-center">Create new Log In</h1>
-            <p className="text-danger">{this.state.message}</p>
-            <br/>
-            <input type="text" value={this.state.fullName} placeholder="Name" onChange={(event) => this.setState({fullName: event.target.value})}/>
-            <br/>
-            <input type="text" value={this.state.email} placeholder="Email" onChange={(event) => this.setState({email: event.target.value})}/>
-            <br/>
-            <input type="text" value={this.state.username} placeholder="Username" onChange={(event) => this.setState({username: event.target.value})}/>
-            <br/>
-            <input type="text" value={this.state.password} placeholder="Password" onChange={(event) => this.setState({password: event.target.value})}/>
-            <br/>
-            <button className="btn btn-primary" onClick={() => this.newUser()}>Create Account</button>
-            <br/>
-            <button className="btn btn-warning" onClick={() => this.exitCreate(false)}>Back</button>
+    let html = <div className="row m-0" >
+        <div className="col-md-4 col-1"></div>
+        <div className="col-10 col-md-4">
+            <div className="container bg-dark text-light p-5 m-0 text-center">
+                <h1 className="text-center text-warning">New Account</h1>
+                <h4 className="text-danger">{this.state.message}</h4>
+                <br/>
+                <input className="m-1" type="text" value={this.state.fullName} placeholder="Name" onChange={(event) => this.setState({fullName: event.target.value})}/>
+                <br/>
+                <input className="m-1" type="text" value={this.state.email} placeholder="Email" onChange={(event) => this.setState({email: event.target.value})}/>
+                <br/>
+                <input className="m-1" type="text" value={this.state.username} placeholder="Username" onChange={(event) => this.setState({username: event.target.value})}/>
+                <br/>
+                <input className="m-1" type="text" value={this.state.password} placeholder="Password" onChange={(event) => this.setState({password: event.target.value})}/>
+                <br/>
+                <button className="btn btn-primary m-3 mb-5 text-center" onClick={() => this.newUser()}>Create Account</button>
+                <br/>
+                <button className="btn btn-warning m-3" onClick={() => this.exitCreate(false)}>Back</button>
+            </div>
         </div>
     </div>;
     return (html);

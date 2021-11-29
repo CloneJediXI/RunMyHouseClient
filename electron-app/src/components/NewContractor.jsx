@@ -69,29 +69,33 @@ class NewContractor extends React.Component {
     
   }
   render(){
-    let html = <div className="contact">
-        <div className="container">
-            <h1 className="text-center">Create new Contractor Account</h1>
-            <p className="text-danger">{this.state.message}</p>
-            <br/>
-            <input type="text" value={this.state.companyName} placeholder="Company Name" onChange={(event) => this.setState({companyName: event.target.value})}/>
-            <br/>
-            <input type="text" value={this.state.password} placeholder="Password" onChange={(event) => this.setState({password: event.target.value})}/>
-            <br/>
-            <select value={this.state.service} onChange={(event) => this.setState({service: event.target.value})}>
-                {this.state.types.map(element => <option value={element} key={element}>{element}</option>)}
-            </select>
-            <label>Add New Service</label>
-            <input type="text" value={this.state.newType} placeholder="New Type of Service" onChange={(event) => this.setState({newType: event.target.value})}/>
-            <button className="btn btn-success" onClick={() => this.newType()}>Submit</button>
-            <br/>
-            <input type="text" value={this.state.routingNumber} placeholder="Bank Routing number" onChange={(event) => this.setState({routingNumber: event.target.value})}/>
-            <br/>
-            <input type="text" value={this.state.acountNumber} placeholder="Bank Account Number" onChange={(event) => this.setState({acountNumber: event.target.value})}/>
-            <br/>
-            <button className="btn btn-primary" onClick={() => this.newUser()}>Create Account</button>
-            <br/>
-            <button className="btn btn-warning" onClick={() => this.exitCreateContractor(false)}>Back</button>
+    let html = <div className="row m-0">
+        <div className="col-md-4 col-1"></div>
+        <div className="col-10 col-md-4">
+            <div className="container bg-dark text-light p-5 m-0 text-center">
+                <h1 className="text-center text-warning">New Contractor</h1>
+                <h4 className="text-danger">{this.state.message}</h4>
+                <br/>
+                <input className="m-1" type="text" value={this.state.companyName} placeholder="Company Name" onChange={(event) => this.setState({companyName: event.target.value})}/>
+                <br/>
+                <input className="m-1" type="text" value={this.state.password} placeholder="Password" onChange={(event) => this.setState({password: event.target.value})}/>
+                <br/>
+                <div className="mt-2 bg-secondary p-3">
+                    <label className="mb-1 me-1">Select Service Type</label>
+                    <select className="mb-1" value={this.state.service} onChange={(event) => this.setState({service: event.target.value})}>
+                        {this.state.types.map(element => <option value={element} key={element}>{element}</option>)}
+                    </select>
+                    <br/>
+                    <label className="mb-1">Add New Service</label>
+                    <input className="mb-1" type="text" value={this.state.newType} placeholder="New Type of Service" onChange={(event) => this.setState({newType: event.target.value})}/>
+                    <button className="btn btn-success" onClick={() => this.newType()}>Submit</button>
+                </div>
+                
+                <br/>
+                <button className="mb-3 mt-1 btn btn-primary" onClick={() => this.newUser()}>Create Account</button>
+                <br/>
+                <button className="mt-3 btn btn-warning" onClick={() => this.exitCreateContractor(false)}>Back</button>
+            </div>
         </div>
     </div>;
     return (html);
