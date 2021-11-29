@@ -7,6 +7,9 @@ class Home extends React.Component {
     super(props);
     this.getJobs = this.getJobs.bind(this);
     this.state = {
+      jobTitle:'',
+      jobCost:'',
+      jobDesc:'',
       err: 'false',
       message: '',
       jobs: [],
@@ -33,6 +36,17 @@ class Home extends React.Component {
           console.error('There was an error!', error);
         });;
   }
+  newJob(){
+    fetch('http://'+getServer()+':80/runmyhouseserver/job.php?jobTitle='+this.state.jobTitle+'&jobDesc='+this.state.jobDesc+'&cost='+this.state.jobCost+'&userId='+this.state.id, {method: 'GET', 
+    mode: 'cors', crossDomain:true,})
+        .then(response => response.json())
+        .then(data => this.setState({err: data.data}))
+        .then(data => this.setState({jobTitle: "", jobCost:"", jobDesc: ""}))
+        .catch(error => {
+          this.setState({ message: error.toString() });
+          console.error('There was an error!', error);
+        });;
+  }
   render(){
     let html = <div className="home">
         <div className="container">
@@ -51,12 +65,15 @@ class Home extends React.Component {
               </div>
               <hr/>
               <h2>Create new Job Listing</h2>
-              <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy text
-                ever since the 1500s, when an unknown printer took a galley of
-                type and scrambled it to make a type specimen book.
-              </p>
+              <input className="m-1" type="text" value={this.state.jobTitle} placeholder="Job Title" onChange={(event) => this.setState({jobTitle: event.target.value})}/>
+              <br/>
+              <input className="m-1" type="number" value={this.state.jobCost} placeholder="Estimated Cost" onChange={(event) => this.setState({jobCost: event.target.value})}/>
+              <br/>
+              <label className="w-50 text-start">Job Description</label>
+              <br/>
+              <textarea rows="4" className="m-1 w-50" type="text" value={this.state.jobDesc} onChange={(event) => this.setState({jobDesc: event.target.value})}/>
+              <br/>
+              <button className="btn btn-primary m-3 mb-5 text-center" onClick={() => this.newJob()}>Create New Job</button>
             </div>
           </div>
         </div>
