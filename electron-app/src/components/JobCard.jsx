@@ -26,7 +26,7 @@ class JobCard extends React.Component {
                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div className="modal-body text-start">
-                        <input className="m-1" type="number" value={this.state.rating} placeholder="Conractor Rating" onChange={(event) => this.setState({rating: this.clamp(event.target.value)})}/>
+                        <input className="m-1" type="number" value={this.state.rating} placeholder="Contractor Rating" onChange={(event) => this.setState({rating: this.clamp(event.target.value)})}/>
                         <br/>
                         <label className="w-50 text-start">Review</label>
                         <br/>
