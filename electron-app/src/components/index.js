@@ -8,3 +8,5 @@ export { default as NewUser } from "./NewUser";
 export { default as NewContractor } from "./NewContractor";
 export { default as ContractorHome } from "./ContractorHome";
 export { default as JobCard } from "./JobCard";
+export { default as CustomerBids } from "./CustomerBids";
+export { default as ContractorBids } from "./ContractorBids";

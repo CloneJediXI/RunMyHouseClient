@@ -26,7 +26,7 @@ function Navigation(props) {
                     <Link className={`nav-link  ${
                         props.location.pathname === "/about" ? "about" : ""
                         }`} to="/about">
-                        About
+                        Job Bidding
                     </Link>
                     <Link className={`nav-link  ${
                         props.location.pathname === "/contact" ? "active" : ""

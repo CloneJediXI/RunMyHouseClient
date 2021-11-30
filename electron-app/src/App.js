@@ -3,7 +3,9 @@ import './App.css';
 
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Navigation, Footer, Home, About, Contact, LogIn, NewUser, NewContractor, ContractorHome } from "./components";
+import { Navigation, Footer, Home, 
+  About, Contact, LogIn, NewUser, 
+  NewContractor, ContractorHome, ContractorBids, CustomerBids } from "./components";
 
 class App extends React.Component {
   constructor(props) {
@@ -76,7 +78,7 @@ class App extends React.Component {
           <Navigation logOut={this.logOut} isContractor={true}/>
           <Switch>
             <Route path="/" exact component={() => <ContractorHome id={this.state.id}/>} />
-            <Route path="/about" exact component={() => <About />} />
+            <Route path="/about" exact component={() => <ContractorBids id={this.state.id}/>} />
             <Route path="/contact" exact component={() => <Contact />} />
           </Switch>
           <Footer />
@@ -88,7 +90,7 @@ class App extends React.Component {
           <Navigation logOut={this.logOut} isContractor={false}/>
           <Switch>
             <Route path="/" exact component={() => <Home id={this.state.id}/>} />
-            <Route path="/about" exact component={() => <About />} />
+            <Route path="/about" exact component={() => <CustomerBids id={this.state.id}/>} />
             <Route path="/contact" exact component={() => <Contact />} />
           </Switch>
           <Footer />
