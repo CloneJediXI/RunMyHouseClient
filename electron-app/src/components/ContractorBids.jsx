@@ -19,11 +19,6 @@ class ContractorBids extends React.Component {
     };
     
   }
-  componentDidUpdate(prevProps, prevState){
-    if (prevState.viewAll != this.state.viewAll) {
-      this.getJobs();
-    }
-  }
   componentDidMount() {
     this.getJobs();
   }
@@ -55,7 +50,7 @@ class ContractorBids extends React.Component {
             <div className="col-lg-8">
               <h1 className="font-weight-light">Jobs Open for Bidding</h1>
               <div className="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
-                {this.state.jobs.map(element => <JobCard data={element} key={element.ticket_id} bidding={true} submitBid={this.submitBid}></JobCard>)}
+                {this.state.jobs.map(element => <JobCard data={element} key={element.ticket_id} bidding={true} submitBid={this.submitBid} contractor={true}></JobCard>)}
               </div>
               <hr/>
               

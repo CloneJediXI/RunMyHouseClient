@@ -47,7 +47,7 @@ class ContractorHome extends React.Component {
                 </div>
               </div>
               <div className="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
-                {this.state.jobs.map(element => <JobCard data={element} key={element.ticket_id}></JobCard>)}
+                {this.state.jobs.map(element => <JobCard data={element} key={element.ticket_id} contractor={true}></JobCard>)}
               </div>
               <hr/>
               <h2>Create new Job Listing</h2>

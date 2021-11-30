@@ -16,6 +16,17 @@ class JobCard extends React.Component {
         
     }
     render(){
+        let footer = <span></span>;
+        if(this.props.bidding && this.props.contractor){
+            footer = <span>
+                <input className="m-1" type="number" value={this.state.bid} placeholder="Estimated Cost" onChange={(event) => this.setState({bid: event.target.value})}/>
+                <button className="btn btn-success ms-2" onClick={()=>this.props.submitBid(this.state.bid, this.props.data.ticket_id)}>Submit Bid</button>
+            </span>;
+        }else if(this.props.bidding && !this.props.contractor){
+            footer = <button className="btn btn-success ms-2" onClick={()=>this.props.closeBidding(this.props.data.ticket_id)}>Close Bidding</button>;
+        }else if(!this.props.bidding && !this.props.contractor && this.props.data.ticket_status == "Open"){
+            footer = <button className="btn btn-success ms-2" onClick={()=>this.props.submitBid(this.state.bid, this.props.data.ticket_id)}>Mark Job as Complete</button>;
+        }
         return (
             <div className="col">
           <div className="card text-dark bg-light mb-3 border-warning h-100" style={{minWidth:"15rem"}}>
@@ -32,7 +43,7 @@ class JobCard extends React.Component {
                   
               </div>
               <div className="card-footer">
-                  {(this.props.bidding)? <span><input className="m-1" type="number" value={this.state.bid} placeholder="Estimated Cost" onChange={(event) => this.setState({bid: event.target.value})}/><button className="btn btn-success ms-2" onClick={()=>this.props.submitBid(this.state.bid, this.props.data.ticket_id)}>Submit Bid</button></span>:<button></button>}
+                  {footer}
               </div>
           </div>
           </div>
