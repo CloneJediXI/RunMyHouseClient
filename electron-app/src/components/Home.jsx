@@ -6,6 +6,7 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.getJobs = this.getJobs.bind(this);
+    this.markJobComplete = this.markJobComplete.bind(this);
     this.state = {
       jobTitle:'',
       jobCost:'',
@@ -47,6 +48,27 @@ class Home extends React.Component {
           console.error('There was an error!', error);
         });;
   }
+  markJobComplete(ticket, rating, review){
+    // Mark Job as complete
+    fetch('http://'+getServer()+':80/runmyhouseserver/job.php?ticketId='+ticket+'&completeFlag=true', {method: 'GET', 
+    mode: 'cors', crossDomain:true,})
+        .then(response => this.addReview(ticket, rating, review))
+        .catch(error => {
+          this.setState({ message: error.toString() });
+          console.error('There was an error!', error);
+        });;
+    
+  }
+  addReview(ticket, rating, review){
+    // Add a customer review
+    fetch('http://'+getServer()+':80/runmyhouseserver/review.php?ticketId='+ticket+'&reviewRating='+rating+'&reviewText='+review+'&userId='+this.state.id, {method: 'GET', 
+    mode: 'cors', crossDomain:true,})
+        .then(response => this.getJobs())
+        .catch(error => {
+          this.setState({ message: error.toString() });
+          console.error('There was an error!', error);
+        });;
+  }
   render(){
     let html = <div className="home">
         <div className="container">
@@ -61,7 +83,7 @@ class Home extends React.Component {
                 </div>
               </div>
               <div className="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
-                {this.state.jobs.map(element => <JobCard data={element} key={element.ticket_id}></JobCard>)}
+                {this.state.jobs.map(element => <JobCard data={element} key={element.ticket_id} markJobComplete={this.markJobComplete}></JobCard>)}
               </div>
               <hr/>
               <h2>Create new Job Listing</h2>
