@@ -79,7 +79,6 @@ class App extends React.Component {
           <Switch>
             <Route path="/" exact component={() => <ContractorHome id={this.state.id}/>} />
             <Route path="/about" exact component={() => <ContractorBids id={this.state.id}/>} />
-            <Route path="/contact" exact component={() => <Contact />} />
           </Switch>
           <Footer />
         </Router>
@@ -91,7 +90,6 @@ class App extends React.Component {
           <Switch>
             <Route path="/" exact component={() => <Home id={this.state.id}/>} />
             <Route path="/about" exact component={() => <CustomerBids id={this.state.id}/>} />
-            <Route path="/contact" exact component={() => <Contact />} />
           </Switch>
           <Footer />
         </Router>
