@@ -58,14 +58,18 @@ class App extends React.Component {
 
   render() {
     let test = <div className="App m-0"><h1 className="text-center">Oops! Something went wrong!</h1></div>;
+    /* Decides to display the login screen or the main application */
     if (this.state.auth === 'false'){
+      /* If this is a new user, show user account creation */
       if (this.state.newUser === 'true'){
         test = <NewUser validate={this.validate}
                   exitCreate={this.exitCreate}></NewUser>;
       }else if(this.state.newContractor === 'true'){
+        /* If this is a new contractor, show contractor creation screen */
         test = <NewContractor validate={this.validate}
                   exitCreateContractor={this.exitCreateContractor}></NewContractor>;
       }else{
+        /* If this is an existing user, show login screen */
         test = <LogIn validate={this.validate} 
                   enterCreate={this.enterCreate}
                   enterCreateContractor={this.enterCreateContractor}
@@ -73,6 +77,7 @@ class App extends React.Component {
                   ></LogIn>;
       }
     }else if(this.state.contractor) {
+      /* Display contractor specific app pages */
       test = <div className="App m-0">
         <Router>
           <Navigation logOut={this.logOut} isContractor={true}/>
@@ -84,6 +89,7 @@ class App extends React.Component {
         </Router>
       </div>;
     }else{
+      /* Display customer specific app pages */
       test = <div className="App m-0">
         <Router>
           <Navigation logOut={this.logOut} isContractor={false}/>
